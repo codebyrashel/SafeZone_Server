@@ -1,31 +1,17 @@
 import express, { Application, Request, Response } from "express";
-import { prisma } from "./app/lib/prisma";
+import { IndexRoutes } from "./app/routes";
 
 const app: Application = express();
 
-// Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));
-
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Basic route
-// app.get('/', (req: Request, res: Response) => {
-//   res.send('Hello, TypeScript + Express!');
-// });
+app.use("/api/v1", IndexRoutes);
 
-app.get('/', async (req: Request, res: Response) => {
-
-  const speciality = await prisma.speciality.create({
-    data: {
-      title: 'Cardiology'
-    }
-  })
-
-  res.status(201).json({
+app.get("/", (req: Request, res: Response) => {
+  res.json({
     success: true,
-    message: "API is working",
-    data: speciality
+    message: "SafeZone API running 🩺",
   });
 });
 
