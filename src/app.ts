@@ -1,5 +1,7 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import { IndexRoutes } from "./app/routes";
+import { globalErrorHandler } from "./middleware/globalErrorHandler";
+import { notFound } from "./middleware/notFound";
 
 const app: Application = express();
 
@@ -14,5 +16,8 @@ app.get("/", (req: Request, res: Response) => {
     message: "SafeZone API running 🩺",
   });
 });
+
+app.use(globalErrorHandler)
+app.use(notFound)
 
 export default app;
