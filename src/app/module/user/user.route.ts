@@ -1,43 +1,34 @@
-import { Request, Response, NextFunction, Router } from "express";
+import { Router } from "express";
 import { UserController } from "./user.controller";
-import z from "zod";
-import { Gender } from "../../../generated/prisma/enums";
+import { validateRequest } from "../../../middleware/validateRequest";
+import { createDoctorZodSchema } from "./user.validation";
 
 
-const createDoctorZodSchema = z.object({
-    password: z.string("Password is required").min(6, "Password must be at least 6 characters").max(20, "Password must be at most 20 characters"),
-    doctor: z.object({
-        name: z.string("Name is required").min(5, "Name must be at least 5 characters").max(40, "Name must be at most 40 characters"),
-        email: z.email("Invalid email address"),
-        contactNumber: z.string("Contact number is required").min(11, "Contact number must be 11 characters").max(14, "Contact number must be at most 14 characters"),
-        address: z.string("Address is required").min(10, "Address must be at least 10 characters").max(100, "Address must be at most 100 characters").optional(),
-        registrationNumber: z.string("Registration number is required"),
-        experience: z.int("Experience must be integer").nonnegative("Experience cannot be negative").optional(),
-        gender: z.enum([Gender.MALE, Gender.FEMALE], "Gender must be either MALE or FEMALE"),
-        appointmentFee: z.number("Appointment fee must be a number").nonnegative("Appointment fee cannot be negative"),
-        qualification: z.string("Qualification is required").min(2, "Qualification must be at least 2 characters").max(50, "Qualification must be at most 50 characters"),
-        currentWorkingPlace: z.string("Current Working place is required").min(2, "Current working place must be at least 2 characters").max(50, "Current working place must be at most 50 characters"),
-        designation: z.string("Designation is required").min(2, "Designation must be at least 2 characters").max(50, "Designation must be at most 50 characters"),
-    }),
-    specialities: z.array(z.uuid(), "Specialities must be an array of strings").min(1, "At least one speciality is required")
-})
+
 
 const router = Router();
 
-router.post("/create-doctor", (req: Request, res: Response, next: NextFunction) => { 
 
-    const parsedResult = createDoctorZodSchema.safeParse(req.body);
+router.post("/create-doctor", 
+    
+//     (req: Request, res: Response, next: NextFunction) => { 
 
-    if(!parsedResult.success){
-        next(parsedResult.error)
-    }
+//     const parsedResult = createDoctorZodSchema.safeParse(req.body);
 
-    //Sanitizing the data
-    req.body = parsedResult.data;
+//     if(!parsedResult.success){
+//         next(parsedResult.error)
+//     }
 
-    next()
+//     //Sanitizing the data
+//     req.body = parsedResult.data;
 
- }, UserController.createDoctor);
+//     next()
+
+//  }, 
+
+ validateRequest(createDoctorZodSchema),
+ 
+ UserController.createDoctor);
 // router.post("/create-admin", UserController.createAdmin);
 // router.post("/create-superadmin", UserController.createSuperAdmin);
 
