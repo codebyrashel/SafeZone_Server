@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/api/v1", IndexRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.json({
+  res.status(201).json({
     success: true,
     message: "SafeZone API running 🩺",
   });
