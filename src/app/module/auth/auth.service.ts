@@ -44,16 +44,38 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
       return patientTx;
     });
 
+    const accessToken = tokenUtils.getAccessToken({
+      userId: data.user.id,
+      role: data.user.role,
+      name: data.user.name,
+      email: data.user.email,
+      emailVerified: data.user.emailVerified,
+      status: data.user.status,
+      isDeleted: data.user.isDeleted,
+    });
+
+    const refreshToken = tokenUtils.getRefreshToken({
+      userId: data.user.id,
+      role: data.user.role,
+      name: data.user.name,
+      email: data.user.email,
+      emailVerified: data.user.emailVerified,
+      status: data.user.status,
+      isDeleted: data.user.isDeleted,
+    });
+
     return {
       ...data,
+      accessToken,
+      refreshToken,
       patient,
     };
   } catch (error) {
     console.log("Transaction error : ", error);
     await prisma.user.delete({
-        where: {
-            id: data.user.id
-        }
+      where: {
+        id: data.user.id
+      }
     })
     throw error;
   }
@@ -84,7 +106,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
     throw new AppError(status.NOT_FOUND, "User is deleted");
   }
 
-  const accessToken =tokenUtils.getAccessToken({
+  const accessToken = tokenUtils.getAccessToken({
     userId: data.user.id,
     role: data.user.role,
     name: data.user.name,
