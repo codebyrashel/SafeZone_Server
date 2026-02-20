@@ -49,7 +49,98 @@ This separation ensures:
 ## 📁 Project Structure
 
 ```txt
-README.md
+├── dist
+│   ├── prisma.config.js
+│   └── src
+│       ├── app
+│       │   ├── lib
+│       │   ├── module
+│       │   ├── routes
+│       │   └── shared
+│       ├── app.js
+│       ├── generated
+│       │   └── prisma
+│       └── server.js
+├── eslint.config.mjs
+├── package.json
+├── pnpm-lock.yaml
+├── prisma
+│   ├── migrations
+│   │   ├── 20260207145148_init
+│   │   │   └── migration.sql
+│   │   ├── 20260210123937_dev
+│   │   │   └── migration.sql
+│   │   ├── 20260210124905_init
+│   │   │   └── migration.sql
+│   │   ├── 20260214065447_patient_model_created
+│   │   │   └── migration.sql
+│   │   ├── 20260214065725_update_patient
+│   │   │   └── migration.sql
+│   │   ├── 20260214070322_update_patient
+│   │   │   └── migration.sql
+│   │   ├── 20260214084731_doctor_speciality_add
+│   │   │   └── migration.sql
+│   │   └── migration_lock.toml
+│   └── schema
+│       ├── admin.prisma
+│       ├── appointment.prisma
+│       ├── auth.prisma
+│       ├── doctor.prisma
+│       ├── enums.prisma
+│       ├── medicalReport.prisma
+│       ├── patientHealthData.prisma
+│       ├── patient.prisma
+│       ├── payment.prisma
+│       ├── prescription.prisma
+│       ├── review.prisma
+│       ├── schema.prisma
+│       ├── shedule.prisma
+│       └── speciality.prisma
+├── prisma.config.ts
+├── README.md
+├── src
+│   ├── app
+│   │   ├── errorHelpers
+│   │   │   ├── AppError.ts
+│   │   │   └── handleZodError.ts
+│   │   ├── interfaces
+│   │   │   └── error.interfaces.ts
+│   │   ├── lib
+│   │   │   ├── auth.ts
+│   │   │   └── prisma.ts
+│   │   ├── module
+│   │   │   ├── auth
+│   │   │   ├── doctor
+│   │   │   ├── speciality
+│   │   │   └── user
+│   │   ├── routes
+│   │   │   └── index.ts
+│   │   ├── shared
+│   │   │   ├── catchAsync.ts
+│   │   │   └── sendResponse.ts
+│   │   └── utils
+│   │       ├── cookie.ts
+│   │       ├── jwt.ts
+│   │       └── token.ts
+│   ├── app.ts
+│   ├── config
+│   │   └── env.ts
+│   ├── generated
+│   │   └── prisma
+│   │       ├── browser.ts
+│   │       ├── client.ts
+│   │       ├── commonInputTypes.ts
+│   │       ├── enums.ts
+│   │       ├── internal
+│   │       ├── models
+│   │       └── models.ts
+│   ├── middleware
+│   │   ├── checkAuth.ts
+│   │   ├── globalErrorHandler.ts
+│   │   ├── notFound.ts
+│   │   └── validateRequest.ts
+│   └── server.ts
+└── tsconfig.json
 ```
 
 > Status: This project is under active development and will be updated as the project requirement updates and progress. This readme will be update as the project progress.
